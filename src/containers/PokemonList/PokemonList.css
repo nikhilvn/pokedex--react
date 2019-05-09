@@ -1,0 +1,56 @@
+.PokemonList_wrapper {
+  padding: 50px;
+  width: 740px;
+  margin: 0 auto;
+}
+
+.PokemonList_list {
+  padding: 0;
+  position: relative;
+}
+
+.Loader_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255,255,255,0.7);
+}
+
+.PokemonList_Pagination {
+  margin: 50px 5px;
+  text-align: center;
+}
+
+.Pagination_NumberList {
+  display: inline-block;
+  margin: 0;
+  padding: 0 10px;
+  vertical-align: middle;
+}
+
+.Pagination_NumberList li {
+  display: inline-block;
+  user-select: none;
+}
+
+.Pagination_NumberList li a {
+  padding: 5px 10px;
+  border: 2px solid #4885ed;
+  color: #4885ed;
+  border-radius: 2px;
+  margin: 0 5px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.Pagination_NumberList li.next:hover a,
+.Pagination_NumberList li.previous:hover a,
+.Pagination_NumberList li.Pagination_Number--active a {
+  background-color: #4885ed;
+  color: #fff;
+}
