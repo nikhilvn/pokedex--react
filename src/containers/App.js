@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import axiosPokeApi from '../axios-pokeapi';
 
-import PokemonList from './PokemonList/PokemonList';
+import List from './List/List';
+import Header from '../components/Header/Header';
 
 class App extends Component {
 
   render() {
     return (
       <div className="App">
-        <PokemonList />
+        <Header />
+        <List />
       </div>
     );
   }

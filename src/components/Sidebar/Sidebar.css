@@ -1,0 +1,11 @@
+aside {
+  width: 30%;
+}
+
+.Sidebar_wrapper {
+  font-size: 20px; /* Temp */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  height: 100%;
+  margin: 5px;
+}

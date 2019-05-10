@@ -1,0 +1,32 @@
+.Pokemon_Stat {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+  height: 30px;
+}
+
+.ProgressBar_wrapper {
+  display: inline-block;
+  width: 200px;
+  height: 100%;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}
+
+.Pokemon_StatName {
+  width: 150px;
+  text-transform: capitalize;
+}
+
+.ProgressBar_Meter {
+  border-radius: 4px;
+  background-color: #4885ed;
+}
+
+.ProgressBar_Meter span {
+  color: #fff;
+  margin-left: 5px;
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
+}

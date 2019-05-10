@@ -14,8 +14,8 @@ const button = (props) => {
   );
 }
 
-// button.defaultProps = {
-//   extraClasses: [],
-// }
+button.defaultProps = {
+  extraClasses: [],
+}
 
 export default button;

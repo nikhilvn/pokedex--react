@@ -1,0 +1,22 @@
+.Single {
+  max-width: 800px;
+  margin: 100px auto;
+}
+
+.Single_Header {
+  display: flex;
+}
+
+.Single_Image {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Single_Image img {
+  vertical-align: middle;
+}
+
+.Single_Title {
+  margin-left: 30px;
+  text-transform: capitalize;
+}

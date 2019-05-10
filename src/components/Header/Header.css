@@ -1,0 +1,25 @@
+header {
+  height: 60px;
+  border: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+header ul {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+header ul li {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 5px;
+}
+
+header div {
+  display: inline-flex;
+  align-items: center;
+}
