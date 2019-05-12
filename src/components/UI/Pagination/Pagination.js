@@ -18,6 +18,7 @@ const pagination = (props) => {
         subContainerClassName={'pages pagination'}
         activeClassName={'Pagination_Number--active'}
         marginPagesDisplayed={1}
+        forcePage={props.initialPage}
       />
 			</div>
   );

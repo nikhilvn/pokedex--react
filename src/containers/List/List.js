@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axiosPokeApi from '../../axios-pokeapi';
 import { Route, withRouter } from 'react-router-dom';
 import './List.css';
+import queryString from 'query-string';
 
 import Archive from '../../components/Archive/Archive';
 import Single from '../Single/Single';
@@ -10,7 +11,7 @@ class List extends Component {
 	state = {
 		pokemonData: [],
 		baseURL: 'https://pokeapi.co/api/v2',
-		currentPageURL: 'https://pokeapi.co/api/v2/pokemon',
+		currentPageURL: 'https://pokeapi.co/api/v2/pokemon?limit=99999',
 		singleURL: '',
 		dataType: 'pokemon',
 		update: true,
@@ -18,11 +19,12 @@ class List extends Component {
 		prevPageURL: null,
 		loading: true,
 		pageCount: 0,
-		showSingle: false
+		currentPage: 0
 	}
 
 	componentDidMount() {
-		this.loadData();
+		// this.loadData();
+		this.getPageParams();
 	}
 
 	loadData = () => {
@@ -33,11 +35,20 @@ class List extends Component {
 				pageCount: Math.ceil(res.data.count/20),
 				nextPageURL: res.data.next,
 				prevPageURL: res.data.previous,
-				loading: false
+				loading: false,
 			});
 			console.log(res.data);
-			
 		});
+	}
+
+	getPageParams = () => {
+		const values = queryString.parse(this.props.location.search);
+		// console.log(values);
+		if(Object.keys(values).length) {
+			this.handlePageClick({selected: values.page-1});
+		} else {
+			this.loadData();
+		}
 	}
 
 	handlePageClick = (data) => {
@@ -49,10 +60,15 @@ class List extends Component {
 		this.setState({
 			currentPageURL: currentURL,
 			loading: true,
+			currentPage: selected
 		}, () => {
 			this.loadData();
 		});
-		// console.log(data);	
+
+		this.props.history.push({
+			pathname: "/",
+			search: "?page="+(selected+1)
+		});
 	}
 
 	handleSingleClick = (type, name) => {
@@ -60,7 +76,7 @@ class List extends Component {
 		this.props.history.push({
 			pathname: "/single",
 			search: "?type="+type+"&name="+name
-		})
+		});
 	}
 
 	render() {
@@ -86,6 +102,7 @@ class List extends Component {
 							pageCount={this.state.pageCount}
 							handlePageClick={this.handlePageClick}
 							dataType={this.state.dataType}
+							initialPage={this.state.currentPage}
 						/>
 					)}
 				/>

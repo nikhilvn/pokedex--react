@@ -11,7 +11,7 @@ const archive = (props) => {
       <Sidebar />
       <div className="List_wrapper">
         <CardsList dataType={props.dataType} onSingleClick={props.handleSingleClick} loading={props.loading} listData={props.pokemonData} />
-        <Pagination pageCount={props.pageCount} onPageClick={props.handlePageClick} />
+        <Pagination pageCount={props.pageCount} onPageClick={props.handlePageClick} initialPage={props.initialPage} />
       </div>
     </div>
   );

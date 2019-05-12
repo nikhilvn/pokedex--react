@@ -1,8 +1,7 @@
 import React from 'react';
 import './SingleDetails.css';
 
-import Pokemon from './Pokemon/Pokemon';
-import Button from '../UI/Button/Button';
+import Pokemon from '../../containers/Pokemon/Pokemon';
 
 const singleDetails = (props) => {
 
