@@ -1,5 +1,5 @@
 import React from 'react';
-import './SingleDetails.css';
+import './SingleController.css';
 
 import Pokemon from '../../containers/Pokemon/Pokemon';
 
@@ -14,11 +14,7 @@ const singleDetails = (props) => {
     }
   }
 
-  return (
-    <div className="SingleDetails_wrapper">
-      {getDetails(props.type)}
-    </div>
-  );
+  return (getDetails(props.type));
 }
 
 export default singleDetails;

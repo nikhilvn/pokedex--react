@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
-import Single from '../Single/Single';
+import Single from '../../components/Single/Single';
 import List from '../List/List';
 
 class Content extends Component {
 
   state = {
     baseURL: 'https://pokeapi.co/api/v2',
+    dataType: 'pokemon'
   }
 
   render() {
@@ -18,6 +19,7 @@ class Content extends Component {
           render={(props) => (
             <Single {...props}
               url={this.state.baseURL}
+              type={this.state.dataType}
             />
           )}
         />

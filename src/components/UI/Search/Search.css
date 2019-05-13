@@ -1,0 +1,16 @@
+.Search_Wrapper {
+  display: flex;
+}
+
+.Search_Input {
+  width: calc(100% - 50px);
+  border-width: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.Search_Button {
+  width: 50px;
+  background-color: transparent;
+  border-width: 0;
+}
