@@ -2,20 +2,22 @@ import React from 'react';
 
 import ColorBox from '../UI/ColorBox/ColorBox';
 
+
+
 const typeColor = {
-  'normal': '#A8A77A',
-  'fire': '#EE8130',
-  'water': '#6390F0',
-  'electric': '#F7D02C',
-  'grass':'#7AC74C',
-  'ice': '#96D9D6',
-  'fighting': '#C22E28',
-  'poison': '#A33EA1',
-  'ground': '#E2BF65',
-  'flying': '#A98FF3',
-  'psychic': '#F95587',
-  'bug': '#A6B91A',
-  'rock': '#B6A136',
+  'normal': [168,167,122],
+  'fire': [238,129,48],
+  'water': [99,144,240],
+  'electric': [247,208,44],
+  'grass': [122,199,76],
+  'ice': [150,217,214],
+  'fighting': [194,46,40],
+  'poison': [163,62,161],
+  'ground': [226,191,101],
+  'flying': [169,143,243],
+  'psychic': [249,85,135],
+  'bug': [166,185,26],
+  'rock': [182,161,54],
   'ghost': '#735797',
   'dragon': '#6F35FC',
   'dark': '#705746',

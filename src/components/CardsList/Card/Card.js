@@ -8,8 +8,8 @@ const card = (props) => {
   let imgSRC = process.env.PUBLIC_URL+"/sprites/"+props.dataType+"/"+(dataId)+".png";
   
   return (
-    <li className="Card_item" data-id={dataId} onClick={() => props.clicked(props.dataType, props.dataName, dataId)}>
-        <img src={imgSRC} alt={props.dataName} />
+    <li className="Card_item" style={props.style} data-id={dataId} onClick={() => props.clicked(props.dataType, props.dataName)}>
+      <div className="img" style={{backgroundImage: `url(${imgSRC})`}}></div>
       <span className="Card_itemName">{props.dataName}</span>
     </li>
   );

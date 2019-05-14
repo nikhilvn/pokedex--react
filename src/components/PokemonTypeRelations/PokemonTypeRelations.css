@@ -1,0 +1,18 @@
+.Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations {
+  display: flex;
+}
+
+.Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations h4 {
+  margin-top: 10px;
+  width: 15%;
+}
+
+.Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations_Column {
+  display: flex;
+  margin-left: 10px;
+}
+
+.Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations_Column .ColorBox {
+  margin-left: 8px;
+  margin-right: 8px;
+}

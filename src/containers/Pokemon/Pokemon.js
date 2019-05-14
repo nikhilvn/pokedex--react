@@ -3,13 +3,13 @@ import axiosPokeApi from '../../axios-pokeapi';
 import queryString from 'query-string';
 import './Pokemon.css';
 
-import * as pokemonHelper from '../../Helper/helperPokemon';
-
 import PokemonProfile from '../../components/PokemonProfile/PokemonProfile';
 import PokemonHeader from '../../components/PokemonHeader/PokemonHeader';
 import PokemonDescription from '../../components/PokemonDescription/PokemonDescription';
 import PokemonTypes from '../../components/PokemonTypes/PokemonTypes';
 import PokemonStats from '../../components/PokemonStats/PokemonStats';
+import PokemonTypeRelations from '../../components/PokemonTypeRelations/PokemonTypeRelations';
+import PokemonEvolutionChain from '../../components/PokemonEvolutionChain/PokemonEvolutionChain'
 class Pokemon extends Component {
 
   state = {
@@ -18,6 +18,8 @@ class Pokemon extends Component {
     singleImgSrc: '',
     pokemonData: null,
     speciesData: {},
+    typeData: [],
+    evolutionData: [],
     loading: true
   }
 
@@ -32,104 +34,111 @@ class Pokemon extends Component {
     });
   }
 
+  loadPokemonData = () => {
+    
+  }
+
   loadData = () => {
     axiosPokeApi.get(this.state.singleURL)
-      .then(response => {
-        console.log(response.data);
-        return response.data;
+      .then(pokemonResponse => {
+        return pokemonResponse.data;
       })
-      .then(responseData => {
-        axiosPokeApi.get(responseData.species.url)
-        .then(res => {
-          this.setState({
-            pokemonData: responseData,
-            speciesData: res.data,
-            singleImgSrc: process.env.PUBLIC_URL+"/sprites/"+this.state.dataType+"/"+(res.data.id)+".png",
-            loading: false,
-          });
-          console.log(this.state.pokemonData);
-          console.log(this.state.speciesData);
+      .then(pokemonResponseData => {
+        axiosPokeApi.get(pokemonResponseData.species.url)
+        .then(speciesResponse => {
+          return speciesResponse.data
+        })
+        .then(speciesResponseData => {
+          axiosPokeApi.get(speciesResponseData.evolution_chain.url)
+            .then(evolutionResponse => {
+              this.setState({
+                pokemonData: pokemonResponseData,
+                speciesData: speciesResponseData,
+                singleImgSrc: process.env.PUBLIC_URL+"/sprites/"+this.state.dataType+"/"+(speciesResponseData.id)+".png",
+                evolutionData: evolutionResponse.data,
+              });
+              this.isLoading();
+            });
+        });
+        return pokemonResponseData;
+      })
+      .then(pokemonResponseData => {
+        let typeData = [...this.state.typeData];
+        pokemonResponseData.types.forEach(entry => {
+          axiosPokeApi.get(entry.type.url)
+            .then(typeResponse => {
+              typeData.push(typeResponse.data);
+              this.setState({
+                typeData: typeData,
+              });
+              this.isLoading();
+            });
         });
       });
   }
 
+  isLoading = () => {
+    if(!this.state.loading) {
+      return;
+    }
+    if(this.state.pokemonData && this.state.speciesData && this.state.typeData.length === this.state.pokemonData.types.length && this.state.evolutionData) {
+      console.log(this.state.pokemonData);
+      console.log(this.state.speciesData);
+      console.log(this.state.evolutionData);
+      console.log(this.state.typeData);
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
   render() {
 
-    const profileObj = {
-      'Height': {
-        display: pokemonHelper.getHeight(this.state.pokemonData),
-        layout: 'half'
-      },
-      'Weight': {
-        display: pokemonHelper.getWeight(this.state.pokemonData),
-        layout: 'half'
-      },
-      'Capture Rate': {
-        display: pokemonHelper.getCaptureRate(this.state.speciesData),
-        layout: 'half'
-      },
-      'Hatch Steps': {
-        display: pokemonHelper.getHatchSteps(this.state.speciesData),
-        layout: 'half'
-      },
-      'Gender Probability': {
-        display: pokemonHelper.getGenderProb(this.state.speciesData),
-        layout: 'half'
-      },
-      'Shape': {
-        display: pokemonHelper.getShape(this.state.speciesData),
-        layout: 'half'
-      },
-      'Egg Groups': {
-        display: pokemonHelper.getEggGroups(this.state.speciesData),
-        layout: 'full'
-      },
-      'Ablities': {
-        display: pokemonHelper.getAbilities(this.state.pokemonData),
-        layout: 'full'
-      }
-    }
+    let content ='';
 
-    let profile = [];
-    for(let key in profileObj) {
-      profile.push((
-        <PokemonProfile
-          key={key}
-          title={key}
-          display={profileObj[key].display ? profileObj[key].display : ''}
-          layout={profileObj[key].layout}
+    if(this.state.loading) {
+      return content;
+    }
+    content = (
+      <div className="Pokemon">
+        <PokemonHeader
+          imgSrc={this.state.singleImgSrc}
+          name={this.state.pokemonData.name}
         />
-      ));
-    }
-
-    let content = '';
-    if(!this.state.loading) {
-      content = (
-        <div className="Pokemon">
-          <PokemonHeader imgSrc={this.state.singleImgSrc} name={this.state.pokemonData.name} />
-          <PokemonDescription
-            genusData={this.state.speciesData.genera}
-            loading={this.state.loading}
-            flavorTextEntries={this.state.speciesData.flavor_text_entries}
-            gameIndices={this.state.pokemonData.game_indices}  
-          />
-          <h3>General</h3>
-          <PokemonTypes pokemonTypes={this.state.pokemonData.types} loading={this.state.loading} />
-          <PokemonStats stats={this.state.pokemonData.stats} loading={this.state.loading} />
-          <div className="Pokemon_Profile_wrapper">
-            <h3>Profile</h3>
-            <div className="Pokemon_Profile">
-              {profile}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return content;
-    // console.log(pokemonHelper);
+        <PokemonDescription
+          genusData={this.state.speciesData.genera}
+          loading={this.state.loading}
+          flavorTextEntries={this.state.speciesData.flavor_text_entries}
+          gameIndices={this.state.pokemonData.game_indices}  
+        />
+        <h3>General</h3>
+        <PokemonTypes
+          pokemonTypes={this.state.pokemonData.types}
+          loading={this.state.loading}
+        />
+        <PokemonStats
+          stats={this.state.pokemonData.stats}
+          loading={this.state.loading}
+        />
+        <h3>Profile</h3>
+        <PokemonProfile
+          loading={this.state.loading}
+          pokemonData={this.state.pokemonData}
+          speciesData={this.state.speciesData}
+        />
+        <h3>Type Relations</h3>
+        <PokemonTypeRelations
+          loading={this.state.loading}
+          typeData={this.state.typeData}
+        />
+        <PokemonEvolutionChain
+          loading={this.state.loading}
+          evolutionData={this.state.evolutionData}
+        />
+      </div>
+    );
     
-    // return null
+    return content;
   }
 }
 

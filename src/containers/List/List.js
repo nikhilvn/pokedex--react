@@ -16,8 +16,26 @@ class List extends Component {
 		searchInput: ''
 	}
 
+	componentWillMount() {
+		console.log('[componentWillMount]');
+	}
+
 	componentDidMount() {
+		console.log('[componentDidMount]');
 		this.loadData();
+	}
+
+	componentWillUpdate() {
+		console.log('[componentWillUpdate]');
+	}
+
+	componentDidUpdate() {
+		console.log('[componentDidUpdate]');
+	}
+
+	shouldComponentUpdate() {
+		console.log('[shouldComponentUpdate]');
+		return true;
 	}
 
 	loadData = () => {
@@ -33,7 +51,6 @@ class List extends Component {
 	}
 
 	handleSingleClick = (type, name) => {
-		console.log(this.props);
 		this.props.history.push({
 			pathname: "/single",
 			search: "?type="+type+"&name="+name
@@ -41,18 +58,28 @@ class List extends Component {
 	}
 
 	searchChangeHandle = (event) => {
+		if(!event.target.value) {
+			console.time('filter blank');
+			this.setState({
+				pokemonSearchData: this.state.pokemonData
+			});
+			console.timeEnd('filter blank');
+			return;
+		}
 		let searchData = [];
 		searchData = this.state.pokemonData.filter(item => {
-			return item.name.includes(event.target.value);
+			return item.name.indexOf(event.target.value) > -1;
 		});
 		
+		console.time('filter');
 		this.setState({
-			pokemonSearchData: searchData
+			pokemonSearchData: searchData,
+			loading: false
 		});
+		console.timeEnd('filter');
 	}
 
 	render() {
-
 		return (
 			<div className="Archive_wrapper">
 				<Sidebar />
