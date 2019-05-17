@@ -71,7 +71,7 @@ class List extends Component {
 			return;
 		}
 		let searchData = [];
-		searchData = this.state.pokemonData.filter(item => {
+		searchData = this.state.pokemonSearchData.filter(item => {
 			return item.name.indexOf(event.target.value) > -1;
 		});
 		this.setState({
