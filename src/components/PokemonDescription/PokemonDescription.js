@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './PokemonDescription.css';
 
 const getFlavorText = (flavorTextEntries, gameIndices) => {
   let text = '';
@@ -7,7 +7,7 @@ const getFlavorText = (flavorTextEntries, gameIndices) => {
     if(gameIndices.length) {
       const latestVersion = gameIndices[0].version.name;
       flavorTextEntries.forEach(entry => {
-        if(entry.version.name === latestVersion) {
+        if(entry.version.name === latestVersion && entry.language.name === "en") {
           text = entry.flavor_text;
           return;
         }

@@ -3,7 +3,7 @@ import './PokemonEvolutionChain.css';
 
 const pokemonEvolutionChain = (props) => {
   return (
-  null
+    <div></div>
   );
 }
 

@@ -3,10 +3,35 @@ aside {
 }
 
 .Sidebar_wrapper {
-  font-size: 20px; /* Temp */
+  font-size: 18px;
   border: 1px solid #eee;
   border-radius: 4px;
-  /* height: 100%; */
-  height: 400px;
+  padding: 10px 20px;
   margin: 5px;
+}
+
+.Widget {
+  margin-bottom: 20px;
+}
+
+.Widget h4 {
+  margin: 10px 0;
+}
+
+.Widget_FilterList {
+  margin: 5px 0;
+  padding-left: 15px
+}
+
+.Widget_FilterItem {
+  display: block;
+  padding: 5px 0;
+  text-transform: capitalize;
+  cursor: pointer;
+  user-select: none;
+}
+
+.Widget_FilterItem.active {
+  font-weight: bold;
+  color: #4885ed
 }

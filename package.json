@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-cache-adapter": "^2.3.0",
     "query-string": "^6.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -13,7 +14,9 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-virtualized": "^9.21.1",
-    "react-virtualized-auto-sizer": "^1.0.2"
+    "react-virtualized-auto-sizer": "^1.0.2",
+    "reactstrap": "^8.0.0",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "react-scripts start",

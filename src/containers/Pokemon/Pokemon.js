@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import axiosPokeApi from '../../axios-pokeapi';
 import queryString from 'query-string';
 import './Pokemon.css';
@@ -9,7 +10,7 @@ import PokemonDescription from '../../components/PokemonDescription/PokemonDescr
 import PokemonTypes from '../../components/PokemonTypes/PokemonTypes';
 import PokemonStats from '../../components/PokemonStats/PokemonStats';
 import PokemonTypeRelations from '../../components/PokemonTypeRelations/PokemonTypeRelations';
-import PokemonEvolutionChain from '../../components/PokemonEvolutionChain/PokemonEvolutionChain'
+import PokemonEvolutionChain from '../../components/PokemonEvolutionChain/PokemonEvolutionChain';
 class Pokemon extends Component {
 
   state = {
@@ -30,63 +31,52 @@ class Pokemon extends Component {
       singleURL: url,
       dataType: values.type
     }, () => {
-      this.loadData();
+      this.getData();
     });
   }
 
-  loadPokemonData = () => {
-    
-  }
-
-  loadData = () => {
-    axiosPokeApi.get(this.state.singleURL)
-      .then(pokemonResponse => {
-        return pokemonResponse.data;
-      })
-      .then(pokemonResponseData => {
-        axiosPokeApi.get(pokemonResponseData.species.url)
-        .then(speciesResponse => {
-          return speciesResponse.data
-        })
-        .then(speciesResponseData => {
-          axiosPokeApi.get(speciesResponseData.evolution_chain.url)
-            .then(evolutionResponse => {
-              this.setState({
-                pokemonData: pokemonResponseData,
-                speciesData: speciesResponseData,
-                singleImgSrc: process.env.PUBLIC_URL+"/sprites/"+this.state.dataType+"/"+(speciesResponseData.id)+".png",
-                evolutionData: evolutionResponse.data,
-              });
-              this.isLoading();
-            });
-        });
-        return pokemonResponseData;
-      })
-      .then(pokemonResponseData => {
-        let typeData = [...this.state.typeData];
-        pokemonResponseData.types.forEach(entry => {
-          axiosPokeApi.get(entry.type.url)
-            .then(typeResponse => {
-              typeData.push(typeResponse.data);
-              this.setState({
-                typeData: typeData,
-              });
-              this.isLoading();
-            });
-        });
+  getDataFromAPI = async (url) => {
+    let data = null;
+    await axiosPokeApi.get(url)
+      .then(res => {
+        console.log(res.data);
+        data = res.data
       });
+    return data;
+    // return axiosPokeApi.get(url);
   }
 
-  isLoading = () => {
-    if(!this.state.loading) {
-      return;
-    }
-    if(this.state.pokemonData && this.state.speciesData && this.state.typeData.length === this.state.pokemonData.types.length && this.state.evolutionData) {
-      console.log(this.state.pokemonData);
-      console.log(this.state.speciesData);
-      console.log(this.state.evolutionData);
-      console.log(this.state.typeData);
+  getTypeResFromAPI = async (pokemonData) => {
+    let typeData = [];
+    const typesUrl = pokemonData.types.map(entry => {
+      return entry.type.url;
+    });
+    await axios.all(typesUrl.map(url => axios.get(url)))
+      .then(axios.spread((...res) => {
+        typeData = res;
+      }));
+    return typeData;
+  }
+
+  getData = async () => {
+    const pokemonData = await this.getDataFromAPI(this.state.singleURL);
+    const speciesData = await this.getDataFromAPI(pokemonData.species.url);
+    const evolutionData = await this.getDataFromAPI(speciesData.evolution_chain.url);
+    const typeRes = await this.getTypeResFromAPI(pokemonData);
+
+    const typeData = typeRes.map(res => {
+      return res.data;
+    });
+
+    console.log(pokemonData);
+    console.log(evolutionData);
+    if(pokemonData && speciesData && typeData && typeData.length === pokemonData.types.length && evolutionData) {
       this.setState({
+        pokemonData: pokemonData,
+        speciesData: speciesData,
+        evolutionData: evolutionData,
+        typeData: typeData,
+        singleImgSrc: process.env.PUBLIC_URL+"/sprites/"+this.state.dataType+"/"+(pokemonData.id)+".png",
         loading: false
       });
     }
@@ -113,10 +103,12 @@ class Pokemon extends Component {
         />
         <h3>General</h3>
         <PokemonTypes
+          showTitle={true}
           pokemonTypes={this.state.pokemonData.types}
           loading={this.state.loading}
         />
         <PokemonStats
+          showTitle={true}
           stats={this.state.pokemonData.stats}
           loading={this.state.loading}
         />

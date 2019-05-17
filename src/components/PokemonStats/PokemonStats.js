@@ -61,7 +61,7 @@ const pokemonStats = (props) => {
   
   return (
     <div className="Pokemon_Stats">
-      <span>Stats:</span>
+      {props.showTitle ? <span>Stats:</span> : null}
       {stats}
     </div>
   );

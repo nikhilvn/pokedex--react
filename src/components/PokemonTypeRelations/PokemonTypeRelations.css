@@ -1,15 +1,24 @@
 .Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations {
-  display: flex;
+  padding: 0 0 10px;
+  margin: 0 0 10px;
+  /* border-bottom: 1px solid #eee; */
+}
+
+.Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations:last-of-type {
+  border-bottom-width: 0
 }
 
 .Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations h4 {
+  display: inline-block;
   margin-top: 10px;
-  width: 15%;
+  width: 150px;
 }
 
 .Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations_Column {
-  display: flex;
+  display: inline-flex;
+  width: calc(100% - 160px);
   margin-left: 10px;
+  flex-wrap: wrap;
 }
 
 .Pokemon_TypeRelations_Wrapper .Pokemon_TypeRelations_Column .ColorBox {

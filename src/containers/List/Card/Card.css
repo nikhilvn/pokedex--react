@@ -30,3 +30,17 @@
   right: 0;
   bottom: 20px;
 }
+
+.ToolTip_arrow {
+  content: '';
+  border: 10px solid transparent;
+  border-top-color: #fff;
+  border-right-color: #fff;
+  position: absolute;
+  right: calc(100% + 18px);
+  top: 50%;
+  transform: rotate(45deg) translateY(-50%);
+  box-shadow: 3px -3px 6px 0px rgba(0,0,0,0.19);
+  z-index: 11;
+}
+

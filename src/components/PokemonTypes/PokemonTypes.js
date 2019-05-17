@@ -18,13 +18,13 @@ const typeColor = {
   'psychic': [249,85,135],
   'bug': [166,185,26],
   'rock': [182,161,54],
-  'ghost': '#735797',
-  'dragon': '#6F35FC',
-  'dark': '#705746',
-  'steel': '#B7B7CE',
-  'fairy': '#D685AD',
-  'shadow': '#444444',
-  'unknown': '#ffffff',
+  'ghost': [115,87,151],
+  'dragon': [111,53,252],
+  'dark': [112,87,70],
+  'steel': [183,183,206],
+  'fairy': [214,133,173],
+  'shadow': [68,68,68],
+  'unknown': [255,255,255],
 }
 
 const pokemonTypes = (props) => {
@@ -36,7 +36,7 @@ const pokemonTypes = (props) => {
   }
   return (
     <div className="Pokemon_Types">
-      <span>Type:</span>
+      {props.showTitle ? <span>Type:</span> : null}
       {types}
     </div>
   );

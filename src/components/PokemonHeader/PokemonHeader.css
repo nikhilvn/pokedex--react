@@ -3,12 +3,13 @@
 }
 
 .Pokemon_Image {
-  border: 1px solid #ccc;
+  border: 1px solid #4885ed;
   border-radius: 4px;
 }
 
 .Pokemon_Image img {
   vertical-align: middle;
+  padding: 10px
 }
 
 .Pokemon_Title {
