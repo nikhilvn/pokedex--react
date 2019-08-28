@@ -1,3 +1,35 @@
+:root {
+
+  --stat-name-width: 150px;
+  --stat-bar-width: calc(100% - var(--stat-name-width) - 50px);
+
+  /* Gradients */
+  --type-graident: linear-gradient(#eee 40px, transparent 0);
+  --stat-name-gradient: linear-gradient(#eee 20px, transparent 0);
+  --stat-bar-gradient: linear-gradient(#eee 30px, transparent 0);
+
+  /* Sizes */
+  --type-size: 110px 35px;
+  --stat-name-size: var(--stat-name-width) 20px;
+  --stat-bar-size: var(--stat-bar-width) 30px;
+
+  /* Positions */
+  --type-1-pos: 20px 25px;
+  --type-2-pos: 140px 25px;
+  --stat-1-name-pos: 20px 80px;
+  --stat-2-name-pos: 20px 110px;
+  --stat-3-name-pos: 20px 145px;
+  --stat-4-name-pos: 20px 180px;
+  --stat-5-name-pos: 20px 215px;
+  --stat-6-name-pos: 20px 250px;
+  --stat-1-bar-pos: 180px 70px;
+  --stat-2-bar-pos: 180px 105px;
+  --stat-3-bar-pos: 180px 140px;
+  --stat-4-bar-pos: 180px 175px;
+  --stat-5-bar-pos: 180px 210px;
+  --stat-6-bar-pos: 180px 245px;
+}
+
 .ToolTip_Wrapper {
   position: absolute;
   right: calc(100% + 20px);
@@ -16,11 +48,6 @@
   z-index: 10;
 }
 
-.ToolTip_Wrapper.loading {
-  width: 392px;
-  height: 302px;
-}
-
 .ToolTip_Loader_wrapper {
   display: flex;
   justify-content: center;
@@ -32,4 +59,89 @@
 .ToolTip_Wrapper .ColorBox {
   display: inline-block;
   margin: 5px 10px 5px 0;
+}
+
+.ToolTip_Wrapper.loading {
+  width: 392px;
+  height: 302px;
+  background-repeat: no-repeat;
+  background-image: 
+    linear-gradient(
+      90deg, 
+      rgba(255,255,255, 0) 0, 
+      rgba(255,255,255, .8) 50%, 
+      rgba(255,255,255, 0) 100%
+    ),
+    var(--type-graident),
+    var(--type-graident),
+    var(--stat-name-gradient),
+    var(--stat-name-gradient),
+    var(--stat-name-gradient),
+    var(--stat-name-gradient),
+    var(--stat-name-gradient),
+    var(--stat-name-gradient),
+    var(--stat-bar-gradient),
+    var(--stat-bar-gradient),
+    var(--stat-bar-gradient),
+    var(--stat-bar-gradient),
+    var(--stat-bar-gradient),
+    var(--stat-bar-gradient);
+
+  background-size: 
+    200px 100%,
+    var(--type-size),
+    var(--type-size),
+    var(--stat-name-size),
+    var(--stat-name-size),
+    var(--stat-name-size),
+    var(--stat-name-size),
+    var(--stat-name-size),
+    var(--stat-name-size),
+    var(--stat-bar-size),
+    var(--stat-bar-size),
+    var(--stat-bar-size),
+    var(--stat-bar-size),
+    var(--stat-bar-size),
+    var(--stat-bar-size);
+    
+  
+  background-position: 
+    -150% 0,
+    var(--type-1-pos),
+    var(--type-2-pos),
+    var(--stat-1-name-pos),
+    var(--stat-2-name-pos),
+    var(--stat-3-name-pos),
+    var(--stat-4-name-pos),
+    var(--stat-5-name-pos),
+    var(--stat-6-name-pos),
+    var(--stat-1-bar-pos),
+    var(--stat-2-bar-pos),
+    var(--stat-3-bar-pos),
+    var(--stat-4-bar-pos),
+    var(--stat-5-bar-pos),
+    var(--stat-6-bar-pos);
+
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  to {
+  background-position: 
+    200% 0,
+    var(--type-1-pos),
+    var(--type-2-pos),
+    var(--stat-1-name-pos),
+    var(--stat-2-name-pos),
+    var(--stat-3-name-pos),
+    var(--stat-4-name-pos),
+    var(--stat-5-name-pos),
+    var(--stat-6-name-pos),
+    var(--stat-1-bar-pos),
+    var(--stat-2-bar-pos),
+    var(--stat-3-bar-pos),
+    var(--stat-4-bar-pos),
+    var(--stat-5-bar-pos),
+    var(--stat-6-bar-pos);
+  }
 }

@@ -22,7 +22,6 @@ const generationWidget = (props) => {
       <ul className="Widget_FilterList">
         {props.filterData.results.map((entry, index) => {
           let genId = getGenId(entry.url);
-          console.log(genId);
           return <li className={"Widget_FilterItem"+(index===0 ? " active" : "")} key={genId} onClick={(event) => clickEvent(event, entry.url, props.filterPokemon)}>{`Gen ${genId}`}</li>
         })}
       </ul>

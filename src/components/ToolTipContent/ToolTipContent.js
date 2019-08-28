@@ -7,13 +7,13 @@ import Loader from '../UI/Loader/Loader';
 import Aux from '../../HOC/Aux/Aux';
 
 const toolTipContent = (props) => {
-  console.log(props);
   const isLoading = () => {
     return props.isToolTipDataLoaded;
+    // return false;
   }
   const loading = (
     <div className="ToolTip_Loader_wrapper">
-      <Loader />
+      
     </div>
   )
   const content = (
@@ -35,8 +35,6 @@ const toolTipContent = (props) => {
     let toolTipDom = null;
     cardDom = cardEL.getBoundingClientRect();
     toolTipDom = toolTipEL.getBoundingClientRect();
-    console.log(cardDom);
-    console.log(toolTipDom);
     if(cardDom.top < 0 || toolTipDom.top < 0) {
       topPosition = cardDom.top*(-1)+"px";
       classes.push("bottom--auto")
@@ -46,10 +44,13 @@ const toolTipContent = (props) => {
 
   let classes = ["ToolTip_Wrapper"+(!isLoading() ? " loading" : "")];
 
+  // let classes = ["ToolTip_Wrapper loading"];
+
   return (
     <Aux>
       <div style={{top: getTopPosition()}} className={classes.join(" ")}>
         {!isLoading() ? loading : content}
+        {/* {loading} */}
       </div>
       <div className="ToolTip_arrow"></div>
     </Aux>

@@ -24,7 +24,6 @@ class List extends Component {
 	}
 
 	componentDidMount() {
-		console.log('[componentDidMount]');
 		this.loadData();
 	}
 
@@ -34,7 +33,6 @@ class List extends Component {
 			this.setState({
 				generationsData: res.data,
 			});
-			console.log(res.data);
 			return res.data.results;
 		})
 		.then(data => {
@@ -72,7 +70,8 @@ class List extends Component {
 		}
 		let searchData = [];
 		searchData = this.state.pokemonSearchData.filter(item => {
-			return item.name.indexOf(event.target.value) > -1;
+			console.log(item);
+			return item.pokemon ? item.pokemon.name.indexOf(event.target.value) > -1 : item.name.indexOf(event.target.value) > -1;
 		});
 		this.setState({
 			pokemonSearchData: searchData,
@@ -88,16 +87,16 @@ class List extends Component {
 		axiosPokeApi.get(url)
 			.then(res => {
 				if(res.data.pokemon !== null && res.data.pokemon !== undefined) {
-					console.log(res.data.pokemon);
 					this.setState({
 						pokemonSearchData: res.data.pokemon,
+						pokemonData: res.data.pokemon,
 						baseRE: /https:\/\/pokeapi.co\/api\/v2\/pokemon\//gi,
 						listUpdateLoading: false,
 					});
 				} else if(res.data.pokemon_species !== null && res.data.pokemon_species !== undefined) {
-					console.log(res.data.pokemon_species);
 					this.setState({
 						pokemonSearchData: res.data.pokemon_species,
+						pokemonData: res.data.pokemon_species,
 						baseRE: /https:\/\/pokeapi.co\/api\/v2\/pokemon-species\//gi,
 						listUpdateLoading: false,
 					});
