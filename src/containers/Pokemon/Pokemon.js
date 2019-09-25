@@ -39,7 +39,6 @@ class Pokemon extends Component {
     let data = null;
     await axiosPokeApi.get(url)
       .then(res => {
-        console.log(res.data);
         data = res.data
       });
     return data;
@@ -68,8 +67,6 @@ class Pokemon extends Component {
       return res.data;
     });
 
-    console.log(pokemonData);
-    console.log(evolutionData);
     if(pokemonData && speciesData && typeData && typeData.length === pokemonData.types.length && evolutionData) {
       this.setState({
         pokemonData: pokemonData,

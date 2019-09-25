@@ -4,6 +4,7 @@ import './List.css';
 
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CardsList from '../../components/CardsList/CardsList';
+
 class List extends Component {
 	state = {
 		pokemonData: [],
@@ -27,31 +28,34 @@ class List extends Component {
 		this.loadData();
 	}
 
-	loadData = () => {
-		axiosPokeApi.get(this.state.generationsURL)
-		.then(res => {
+	getDataFromAPI = async (url) => {
+		let data = null;
+
+		await axiosPokeApi.get(url)
+			.then(res => {
+				data = res.data;
+			});
+		
+		return data;
+	}
+
+	loadData = async () => {
+
+		const generationsData = await this.getDataFromAPI(this.state.generationsURL);
+		const pokemonData = await this.getDataFromAPI(generationsData.results[0].url);
+		const typesData = await this.getDataFromAPI(this.state.typesURL);
+
+		if( generationsData && pokemonData && typesData ) {
 			this.setState({
-				generationsData: res.data,
+				generationsData: generationsData,
+				pokemonData: pokemonData.pokemon_species,
+				pokemonSearchData: pokemonData.pokemon_species,
+				typesData: typesData,
+				loading: false,
+				listUpdateLoading: false
 			});
-			return res.data.results;
-		})
-		.then(data => {
-			axiosPokeApi.get(data[0].url)
-			.then(res => {
-				this.setState({
-					pokemonData: res.data.pokemon_species,
-					pokemonSearchData: res.data.pokemon_species,
-				});
-			});
-		})
-		axiosPokeApi.get(this.state.typesURL)
-			.then(res => {
-				this.setState({
-					typesData: res.data,
-					loading: false,
-					listUpdateLoading: false
-				});
-			})
+		}
+		
 	}
 
 	handleSingleClick = (type, name) => {
@@ -80,28 +84,30 @@ class List extends Component {
 		});
 	}
 
-	filterPokemon = (url) => {
+	filterPokemon = async (url) => {
 		this.setState({
 			listUpdateLoading: true,
 		});
-		axiosPokeApi.get(url)
-			.then(res => {
-				if(res.data.pokemon !== null && res.data.pokemon !== undefined) {
-					this.setState({
-						pokemonSearchData: res.data.pokemon,
-						pokemonData: res.data.pokemon,
-						baseRE: /https:\/\/pokeapi.co\/api\/v2\/pokemon\//gi,
-						listUpdateLoading: false,
-					});
-				} else if(res.data.pokemon_species !== null && res.data.pokemon_species !== undefined) {
-					this.setState({
-						pokemonSearchData: res.data.pokemon_species,
-						pokemonData: res.data.pokemon_species,
-						baseRE: /https:\/\/pokeapi.co\/api\/v2\/pokemon-species\//gi,
-						listUpdateLoading: false,
-					});
-				}
-			});
+
+		let baseRE = '';
+		let pokemonData = null;
+		const filteredPokemonData = await this.getDataFromAPI(url);
+
+		if(filteredPokemonData.pokemon !== null && filteredPokemonData.pokemon !== undefined) {
+			baseRE = /https:\/\/pokeapi.co\/api\/v2\/pokemon\//gi;
+			pokemonData = filteredPokemonData.pokemon;
+		} else if(filteredPokemonData.pokemon_species !== null && filteredPokemonData.pokemon_species !== undefined) {
+			baseRE = /https:\/\/pokeapi.co\/api\/v2\/pokemon-species\//gi;
+			pokemonData = filteredPokemonData.pokemon_species;
+		}
+
+		this.setState({
+			pokemonSearchData: pokemonData,
+			pokemonData: pokemonData,
+			baseRE: baseRE,
+			listUpdateLoading: false,
+		});
+
 	}
 
 	render() {
