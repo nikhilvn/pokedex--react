@@ -1,0 +1,12 @@
+
+.List_wrapper {
+  width: 65%;
+  padding-left: 20px;
+}
+
+.Archive_wrapper {
+  display: flex;
+  justify-content: center;
+  max-width: 1024px;
+  margin: 100px auto;
+}

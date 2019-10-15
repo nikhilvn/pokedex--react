@@ -1,0 +1,21 @@
+.Pokemon_Profile {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Pokemon_ProfileSingle {
+  max-width: 50%;
+  flex-basis: 50%;
+  margin: 5px 0;
+}
+
+.Pokemon_ProfileSingleTitle {
+  display: inline-block;
+  width: 40%;
+  font-weight: bold;
+}
+
+.Pokemon_ProfileSingleDisplay {
+  display: inline-block;
+  width: 60%;
+}

@@ -1,0 +1,33 @@
+.PokemonList_Pagination {
+  margin: 50px 5px;
+  text-align: center;
+}
+
+.Pagination_NumberList {
+  display: inline-block;
+  margin: 0;
+  padding: 0 10px;
+  vertical-align: middle;
+}
+
+.Pagination_NumberList li {
+  display: inline-block;
+  user-select: none;
+}
+
+.Pagination_NumberList li a {
+  padding: 5px 10px;
+  border: 2px solid #4885ed;
+  color: #4885ed;
+  border-radius: 2px;
+  margin: 0 5px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.Pagination_NumberList li.next:hover a,
+.Pagination_NumberList li.previous:hover a,
+.Pagination_NumberList li.Pagination_Number--active a {
+  background-color: #4885ed;
+  color: #fff;
+}
